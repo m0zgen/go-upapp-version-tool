@@ -40,16 +40,16 @@ The version must use the following format:
 
 Example:
 
-`0.1.0`
-`1.2.3`
-`2.0.15`
-`v1.0.0`
+- `0.1.0`
+- `1.2.3`
+- `2.0.15`
+- `v1.0.0`
 
 Increasing examples:
 
-`1.1.1` -> `1.1.2`
-`0.0.9` -> `0.0.10`
-`v1.2.3` -> `v1.2.4`
+- `1.1.1` -> `1.1.2`
+- `0.0.9` -> `0.0.10`
+- `v1.2.3` -> `v1.2.4`
 
 The tool supports versions with or without the `v` prefix.
 
