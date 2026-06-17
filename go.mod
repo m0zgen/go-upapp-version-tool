@@ -1,3 +1,3 @@
 module go-upapp-version-tool
 
-go 1.22
+go 1.26
