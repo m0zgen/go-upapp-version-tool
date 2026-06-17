@@ -1,0 +1,7 @@
+# IDE
+.idea
+.DS_Store
+.vscode
+
+# Binaries and generated files
+update-version-tool
