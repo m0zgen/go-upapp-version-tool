@@ -2,54 +2,51 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 	"strconv"
 	"strings"
 )
 
+const (
+	appVersion  = "v1.1.1"
+	versionFile = "version.txt"
+)
+
 func main() {
-
-	// Версия приложения
-	vv := "v1.1.1"
-
-	// Зелёный цвет и жирный шрифт
 	greenBold := "\033[1;32m"
-	// Сброс форматирования
 	reset := "\033[0m"
 
-	// Вывод сплэш-экрана с версией
 	fmt.Println("──────────────────────────────")
-	fmt.Printf(" %s%s%-1s%s %s      \n", greenBold, "Update Releaser Tool", "", reset, vv)
+	fmt.Printf(" %s%s%s %s\n", greenBold, "Update Releaser Tool", reset, appVersion)
 	fmt.Println("──────────────────────────────")
 
-	versionFile := "version.txt"
-
-	data, err := ioutil.ReadFile(versionFile)
+	data, err := os.ReadFile(versionFile)
 	if err != nil {
-		log.Fatalf("Ошибка при чтении версии: %v", err)
+		log.Fatalf("Failed to read version file: %v", err)
 	}
 
-	version := string(data)
-	fmt.Printf("Текущая версия: %s\n", version)
+	version := strings.TrimSpace(string(data))
+	fmt.Printf("Current version: %s\n", version)
 
 	parts := strings.Split(version, ".")
 	if len(parts) != 3 {
-		log.Fatalf("Неверный формат версии: %s", version)
+		log.Fatalf("Invalid version format: %s", version)
 	}
 
 	patch, err := strconv.Atoi(parts[2])
 	if err != nil {
-		log.Fatalf("Ошибка при преобразовании патча версии: %v", err)
+		log.Fatalf("Failed to parse patch version: %v", err)
 	}
+
 	patch++
 	parts[2] = strconv.Itoa(patch)
 
 	newVersion := strings.Join(parts, ".")
-	err = ioutil.WriteFile(versionFile, []byte(newVersion), 0644)
-	if err != nil {
-		log.Fatalf("Ошибка при записи новой версии: %v", err)
+
+	if err := os.WriteFile(versionFile, []byte(newVersion+"\n"), 0644); err != nil {
+		log.Fatalf("Failed to write new version: %v", err)
 	}
 
-	fmt.Printf("Новая версия: %s\n", newVersion)
+	fmt.Printf("New version: %s\n", newVersion)
 }
